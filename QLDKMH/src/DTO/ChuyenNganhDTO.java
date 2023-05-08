@@ -1,5 +1,5 @@
 
-package DAO;
+package DTO;
 
 public class ChuyenNganhDTO {
 	String MaCN;
