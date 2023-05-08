@@ -1,4 +1,4 @@
-package DAO;
+package DTO;
 public class HeDaoTaoDTO {
     String MaHDT;
     String TenHDT;
