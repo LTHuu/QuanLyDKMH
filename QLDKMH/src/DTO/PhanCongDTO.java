@@ -1,4 +1,4 @@
-package DAO;
+package DTO;
 
 public class PhanCongDTO {
 	String MaGV;
