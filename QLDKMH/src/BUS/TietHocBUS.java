@@ -12,7 +12,7 @@ public class TietHocBUS {
 	}
 
 	public boolean them(TietHoc obj) {
-		if(checkTrung(obj)) {
+		if (checkTrung(obj)) {
 			dsth.add(obj);
 			return true;
 		}
@@ -27,4 +27,21 @@ public class TietHocBUS {
 		}
 		return true;
 	}
+
+	public boolean xoa(TietHoc obj) {
+		if (dsth.indexOf(obj) != -1) {
+			dsth.remove(dsth.indexOf(obj));
+			return true;
+		}
+		return false;
+	}
+
+	public boolean sua(TietHoc old_obj, TietHoc new_obj) {
+		if (dsth.indexOf(old_obj) != -1) {
+			dsth.set(dsth.indexOf(old_obj), new_obj);
+			return true;
+		}
+		return false;
+	}
 }
+
