@@ -1,26 +1,24 @@
-
 package DTO;
 
 public class ChuyenNganhDTO {
 	String MaCN;
-	String TenCN;
+	String TenCn;
 	String MaKhoa;
 
 	public ChuyenNganhDTO() {
 
 	}
 
-	public ChuyenNganhDTO(String maCN, String tenCN, String maKhoa) {
+	public ChuyenNganhDTO(String maCN, String tenCn,String maKhoa) {
 		super();
 		this.MaCN = maCN;
-		this.TenCN = tenCN;
+		this.TenCn = tenCn;
 		this.MaKhoa = maKhoa;
 	}
 	
 	public ChuyenNganhDTO(ChuyenNganhDTO obj) {
-		super();
 		this.MaCN = obj.MaCN;
-		this.TenCN = obj.TenCN;
+		this.TenCn = obj.TenCn;
 		this.MaKhoa = obj.MaKhoa;
 	}
 
@@ -28,24 +26,23 @@ public class ChuyenNganhDTO {
 		return MaCN;
 	}
 
-	public String getTenCN() {
-		return TenCN;
+	public String getTenCn() {
+		return TenCn;
 	}
 
 	public void setMaCN(String MaCN) {
 		this.MaCN = MaCN;
 	}
 
-	public void setTenCN(String TenCN) {
-		this.TenCN = TenCN;
+	public void setTenCn(String TenCn) {
+		this.TenCn = TenCn;
 	}
 
-        public String getMaKhoa() {
-            return MaKhoa;
-        }
+	public String getMaKhoa() {
+		return MaKhoa;
+	}
 
-        public void setMaKhoa(String MaKhoa) {
-            this.MaKhoa = MaKhoa;
-        }
- 
+	public void setMaKhoa(String maKhoa) {
+		MaKhoa = maKhoa;
+	}
 }

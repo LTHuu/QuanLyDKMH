@@ -3,21 +3,21 @@ package DTO;
 public class PhanCongDTO {
 	String MaGV;
 	String LoaiPC;
-	String MaDuocPC; // dùng lưu mã học phần hoặc mã kiểm tra
+	String MaPC; // dùng lưu mã học phần hoặc mã kiểm tra
 
 	public PhanCongDTO() {
 	}
 
-	public PhanCongDTO(String maGV, String loaiPC, String maDuocPC) {
+	public PhanCongDTO(String maGV, String loaiPC, String maPC) {
 		MaGV = maGV;
 		LoaiPC = loaiPC;
-		MaDuocPC = maDuocPC;
+		MaPC = maPC;
 	}
 
 	public PhanCongDTO(PhanCongDTO obj) {
 		MaGV = obj.MaGV;
 		LoaiPC = obj.LoaiPC;
-		MaDuocPC = obj.MaDuocPC;
+		MaPC = obj.MaPC;
 	}
 
 	public String getMaGV() {
@@ -28,8 +28,8 @@ public class PhanCongDTO {
 		return LoaiPC;
 	}
 
-	public String getMaDuocPC() {
-		return MaDuocPC;
+	public String getMaPC() {
+		return MaPC;
 	}
 
 	public void setMaGV(String maGV) {
@@ -40,8 +40,8 @@ public class PhanCongDTO {
 		LoaiPC = loaiPC;
 	}
 
-	public void setMaDuocPC(String maDuocPC) {
-		MaDuocPC = maDuocPC;
+	public void setMaDuocPC(String maPC) {
+		MaPC = maPC;
 	}
 
 }
