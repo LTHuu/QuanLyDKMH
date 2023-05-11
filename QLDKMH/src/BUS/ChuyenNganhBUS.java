@@ -1,6 +1,7 @@
 package BUS;
 import java.util.ArrayList;
-import DAO.ChuyenNganhDTO;
+
+import DTO.ChuyenNganhDTO;
 
 public class ChuyenNganhBUS {
 	static ArrayList<ChuyenNganhDTO> dsCN = new ArrayList<ChuyenNganhDTO>();
@@ -32,7 +33,7 @@ public class ChuyenNganhBUS {
 	}
 
 	public void xoa(ChuyenNganhDTO obj) {
-		if(dsCN.indexOf(old_obj)!=-1) {
+		if(dsCN.indexOf(obj)!=-1) {
 			dsCN.remove(dsCN.indexOf(obj));
 			slCN--;
 		}
@@ -45,7 +46,7 @@ public class ChuyenNganhBUS {
 			if (t.getMaCN().indexOf(str) != -1) {
 				ok = true;
 			}
-			if (!ok && t.getTenCN().indexOf(str) != -1) {
+			if (!ok && t.getTenCn().indexOf(str) != -1) {
 				ok = true;
 			}
 			if (ok)

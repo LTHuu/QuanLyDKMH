@@ -1,17 +1,18 @@
 package BUS;
 
 import java.util.ArrayList;
-import DAO.KhoaDTO;
+
+import DTO.Khoa;
 
 public class KhoaBUS {
-	static ArrayList<KhoaDTO> dsKhoa = new ArrayList<KhoaDTO>();
+	static ArrayList<Khoa> dsKhoa = new ArrayList<Khoa>();
 	static int slKhoa = 0;
 
 	public KhoaBUS() {
 
 	}
 
-	public boolean them(KhoaDTO obj) {
+	public boolean them(Khoa obj) {
 		if (checkDuplicate(obj)) {
 			dsKhoa.add(obj);
 			slKhoa++;
@@ -20,8 +21,8 @@ public class KhoaBUS {
 		return false;
 	}
 
-	public boolean checkDuplicate(KhoaDTO obj) {
-		for (KhoaDTO temp : dsKhoa) {
+	public boolean checkDuplicate(Khoa obj) {
+		for (Khoa temp : dsKhoa) {
 			if (temp.getMaKhoa().equals(obj.getMaKhoa())) {
 				return false;
 			}
@@ -29,21 +30,21 @@ public class KhoaBUS {
 		return true;
 	}
 
-	public void sua(KhoaDTO old_obj, KhoaDTO new_obj) {
+	public void sua(Khoa old_obj, Khoa new_obj) {
 		if (dsKhoa.indexOf(old_obj) != -1)
 			dsKhoa.set(dsKhoa.indexOf(old_obj), new_obj);
 	}
 
-	public void xoa(KhoaDTO obj) {
-		if (dsKhoa.indexOf(old_obj) != -1) {
+	public void xoa(Khoa obj) {
+		if (dsKhoa.indexOf(obj) != -1) {
 			dsKhoa.remove(dsKhoa.indexOf(obj));
 			slKhoa--;
 		}
 	}
 
-	public ArrayList<KhoaDTO> findKhoa(String str) {
-		ArrayList<KhoaDTO> temp = new ArrayList<KhoaDTO>();
-		for (KhoaDTO t : dsKhoa) {
+	public ArrayList<Khoa> findKhoa(String str) {
+		ArrayList<Khoa> temp = new ArrayList<Khoa>();
+		for (Khoa t : dsKhoa) {
 			boolean ok = false;
 			if (t.getMaKhoa().indexOf(str) != -1) {
 				ok = true;
@@ -60,7 +61,7 @@ public class KhoaBUS {
 		return temp;
 	}
 
-	public static ArrayList<KhoaDTO> getDsKhoa() {
+	public static ArrayList<Khoa> getDsKhoa() {
 		return dsKhoa;
 	}
 
@@ -68,7 +69,7 @@ public class KhoaBUS {
 		return slKhoa;
 	}
 
-	public static void setDsKhoa(ArrayList<KhoaDTO> dsKhoa) {
+	public static void setDsKhoa(ArrayList<Khoa> dsKhoa) {
 		KhoaBUS.dsKhoa = dsKhoa;
 	}
 

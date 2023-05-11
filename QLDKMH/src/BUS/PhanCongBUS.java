@@ -1,7 +1,8 @@
 package BUS;
 
 import java.util.ArrayList;
-import DAO.PhanCongDTO;
+
+import DTO.PhanCongDTO;
 
 public class PhanCongBUS {
 	static ArrayList<PhanCongDTO> dsPC = new ArrayList<PhanCongDTO>();
@@ -34,7 +35,7 @@ public class PhanCongBUS {
 	}
 
 	public void xoa(PhanCongDTO obj) {
-		if (dsPC.indexOf(old_obj) != -1) {
+		if (dsPC.indexOf(obj) != -1) {
 			dsPC.remove(dsPC.indexOf(obj));
 			slPC--;
 		}
