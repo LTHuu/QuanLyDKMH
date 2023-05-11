@@ -2,17 +2,17 @@ package BUS;
 
 import java.util.ArrayList;
 
-import DTO.GiangVienDTO;
+import DTO.GiangVien;
 
 public class GiangVienBUS {
-        static ArrayList<GiangVienDTO> dsGV = new ArrayList<GiangVienDTO>();
+        static ArrayList<GiangVien> dsGV = new ArrayList<GiangVien>();
         static int slGV = 0;
 
         public GiangVienBUS() {
 
         }
 
-        public boolean them(GiangVienDTO obj) {
+        public boolean them(GiangVien obj) {
                 if (checkTrung(obj)) {
                         dsGV.add(obj);
                         slGV++;
@@ -21,8 +21,8 @@ public class GiangVienBUS {
                 return false;
         }
 
-        public boolean checkTrung(GiangVienDTO obj) {
-                for (GiangVienDTO temp : dsGV) {
+        public boolean checkTrung(GiangVien obj) {
+                for (GiangVien temp : dsGV) {
                         if (temp.getMaGV().equals(obj.getMaGV())) {
                                 return false;
                         }
@@ -30,17 +30,17 @@ public class GiangVienBUS {
                 return true;
         }
 
-        public void sua(GiangVienDTO old_obj, GiangVienDTO new_obj) {
-                dsLH.set(dsGV.indexOf(old_obj), new_obj);
+        public void sua(GiangVien old_obj, GiangVien new_obj) {
+                dsGV.set(dsGV.indexOf(old_obj), new_obj);
         }
 
-        public void xoa(GiangVienDTO obj) {
+        public void xoa(GiangVien obj) {
                 dsGV.remove(dsGV.indexOf(obj));
                 slGV--;
         }
 
-        public ArrayList<GiangVienDTO> tim(String str) {
-                ArrayList<GiangVienDTO> temp = new ArrayList<GiangVienDTO>();
+        public ArrayList<GiangVien> tim(String str) {
+                ArrayList<GiangVien> temp = new ArrayList<GiangVien>();
                 for (GiangVien t : dsGV) {
                         boolean ok = false;
                         if (t.getMaGV().indexOf(str) != -1) {
@@ -61,7 +61,7 @@ public class GiangVienBUS {
         }
 
         public static int getSlGV() {
-                return SlGV;
+                return slGV;
         }
 
         public static void setDsGV(ArrayList<GiangVien> dsGV) {
