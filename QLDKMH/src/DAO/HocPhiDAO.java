@@ -95,7 +95,7 @@ public class HocPhiDAO {
 	public Boolean UpdateData(HocPhi newobj, String mahphi) {
 		String sql = "UPDATE HocPhi SET MaHP='" + newobj.getMaHocPhi() + "', NGDONG='" + newobj.getNgDong() + "', SoTien="
 				+ newobj.getSoTien() + ", MASV='" + newobj.getMaSV() + "',HocPhan='" + newobj.getMaHP() + "'"
-				+ " WHERE MaHK='" + mahphi + "'";
+				+ " WHERE MaHP='" + mahphi + "'";
 
 		try (Connection conn = JDBConnect.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 

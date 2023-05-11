@@ -28,7 +28,7 @@ public PhongHoc(PhongHoc obj){
     this.CoSo = obj.CoSo;
     this.Lau = obj.Lau;
 }
-public PhongHoc(String tenPH,String maPH,String khu,String coso,int lau){
+public PhongHoc(String maPH,String tenPH,String khu,String coso,int lau){
     super();
     TenPH = tenPH;
     MaPH = maPH;

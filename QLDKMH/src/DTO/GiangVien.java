@@ -12,15 +12,31 @@ public class GiangVien {
 	String MaGV;
 	String TenGV;
 	String Email;
+	String SDT;
+	String Khoa;
+	String Chuyen;
 
 	public GiangVien() {
-          
-	}	
-	public GiangVien(String maGV, String tenGV, String email) {
+
+	}
+
+	public GiangVien(String maGV, String tenGV, String email, String sdt, String khoa, String chuyen) {
 		super();
 		MaGV = maGV;
 		TenGV = tenGV;
 		Email = email;
+		SDT = sdt;
+		Khoa = khoa;
+		Chuyen = chuyen;
+	}
+	
+	public GiangVien(GiangVien obj) {
+		MaGV = obj.MaGV;
+		TenGV = obj.TenGV;
+		Email = obj.Email;
+		SDT = obj.SDT;
+		Khoa = obj.Khoa;
+		Chuyen = obj.Chuyen;
 	}
 
 	public String getMaGV() {
@@ -47,6 +63,28 @@ public class GiangVien {
 		Email = email;
 	}
 
+	public String getSDT() {
+		return SDT;
+	}
+
+	public String getKhoa() {
+		return Khoa;
+	}
+
+	public String getChuyen() {
+		return Chuyen;
+	}
+
+	public void setSDT(String sDT) {
+		SDT = sDT;
+	}
+
+	public void setKhoa(String khoa) {
+		Khoa = khoa;
+	}
+
+	public void setChuyen(String chuyen) {
+		Chuyen = chuyen;
+	}
+
 }
-
-

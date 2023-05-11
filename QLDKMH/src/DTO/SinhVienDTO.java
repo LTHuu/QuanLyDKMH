@@ -9,44 +9,59 @@ package DTO;
  * @author Thanh
  */
 public class SinhVienDTO {
-    int SoDT,MaSV;
-    String TenSV,DiaChi;
-        public SinhVienDTO(int SoDT,int MaSV , String TenSV, String DiaChi) {
-            this.DiaChi = DiaChi;
-            this.MaSV = MaSV;
-            this.TenSV = TenSV;
-            this.SoDT = SoDT;
+	String MaSV;
+	String TenSV;
+	String SoDT;
+	String Khoa;
+	String DiaChi;
 
-        } 
-        // Getter
-                // String 
-            public String getDiaChi(){  
-                return DiaChi;
-            }
-            public String getTenSV(){  
-                return TenSV;
-            }
-                // Integer
-            public int getSoDT(){
-                return SoDT;
-            }
-            public int getMaSV(){
-                return MaSV;
-            }
-        // Setter
-            //String
-            public void setDiaChi(String DiaChi){
-               this.DiaChi = DiaChi;
-            }
-             public void setTenSV(String TenSV){
-               this.TenSV = TenSV;
-        }
-             //Integer
-             public void setSoDT(int SoDT){
-               this.SoDT = SoDT;
-             }
-             public void setMaSV(int MaSV){
-               this.MaSV = MaSV;
-             }
+	public SinhVienDTO(String MaSV, String TenSV, String SoDT, String Khoa, String DiaChi) {
+		this.MaSV = MaSV;
+		this.TenSV = TenSV;
+		this.SoDT = SoDT;
+		this.Khoa = Khoa;
+		this.DiaChi = DiaChi;
+
+	}
+
+	public String getMaSV() {
+		return MaSV;
+	}
+
+	public String getTenSV() {
+		return TenSV;
+	}
+
+	public String getSoDT() {
+		return SoDT;
+	}
+
+	public String getKhoa() {
+		return Khoa;
+	}
+
+	public String getDiaChi() {
+		return DiaChi;
+	}
+
+	public void setMaSV(String maSV) {
+		MaSV = maSV;
+	}
+
+	public void setTenSV(String tenSV) {
+		TenSV = tenSV;
+	}
+
+	public void setSoDT(String soDT) {
+		SoDT = soDT;
+	}
+
+	public void setKhoa(String khoa) {
+		Khoa = khoa;
+	}
+
+	public void setDiaChi(String diaChi) {
+		DiaChi = diaChi;
+	}
 
 }
