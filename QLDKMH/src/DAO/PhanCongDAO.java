@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import BUS.PhanCongBUS;
-import DAO.PhanCongDTO;
+import DTO.PhanCongDTO;
 import main.JDBConnect;
 
 public class PhanCongDAO {
@@ -19,7 +19,7 @@ public class PhanCongDAO {
 			ResultSet rs = statement.executeQuery("SELECT * FROM PHANCONG");
 
 			while (rs.next()) {
-				String maduocpc = rs.getString("MADUOCPC");
+				String maduocpc = rs.getString("MAPC");
 				String loaipc = rs.getString("LOAIPC");
 				String magv = rs.getString("MAGV");
 				list.add(new PhanCongDTO(maduocpc, loaipc, magv));
@@ -44,13 +44,13 @@ public class PhanCongDAO {
 	}
 
 	public boolean addPC(PhanCongDTO obj) {
-		String sql = "INSERT INTO PHANCONG(MADUOCPC, TENPC, MAGV) VALUES(?,?,?)";
+		String sql = "INSERT INTO PHANCONG(MAPC, LOAIPC, MAGV) VALUES(?,?,?)";
 
 		try (Connection conn = JDBConnect.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-			stmt.setString(1, obj.getMaDuocPC());
+			stmt.setString(1, obj.getMaPC());
 			stmt.setString(2, obj.getLoaiPC());
-			stmt.setInt(3, new GiangVienDTO().getMaGV());
+			stmt.setString(3, obj.getMaGV());
 			stmt.executeUpdate();
 			return true;
 		} catch (SQLException e) {
@@ -60,7 +60,7 @@ public class PhanCongDAO {
 	}
 
 	public boolean DeleteData(PhanCongDTO obj) {
-		String sql = "DELETE FROM PHANCONG WHERE MADUOCPC = '" + obj.getMaDuocPC() + "'";
+		String sql = "DELETE FROM PHANCONG WHERE MADUOCPC = '" + obj.getMaPC() + "'";
 
 		try (Connection conn = JDBConnect.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 
@@ -85,8 +85,9 @@ public class PhanCongDAO {
 		return false;
 	}
 
-	public Boolean UpdateData(PhanCongDTO newobj, String maloaipc) {
-		String sql = "UPDATE PHANCONG SET MADUOCPC='" + newobj.getMaDuocPC() + "', LOAIPC='" + newobj.getLoaiPC() + "', MAGV='" + newobj.getLoaiPC() + "'" + " WHERE MALOAIPC='" + maloaipc + "'";
+	public Boolean UpdateData(PhanCongDTO newobj, String mapc) {
+		String sql = "UPDATE PHANCONG SET MADUOCPC='" + newobj.getMaPC() + "', LOAIPC='" + newobj.getLoaiPC()
+				+ "', MAGV='" + newobj.getLoaiPC() + "'" + " WHERE MAPC='" + mapc + "'";
 
 		try (Connection conn = JDBConnect.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 

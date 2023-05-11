@@ -6,13 +6,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import BUS.HeDaoTaoBUS;
-import DAO.HeDaoTaoDTO;
-
+import DTO.HeDaoTao;
 import main.JDBConnect;
 
 public class HeDaoTaoDAO {
-	public ArrayList<HeDaoTaoDTO> ReadData() {
-		ArrayList<HeDaoTaoDTO> list = new ArrayList<HeDaoTaoDTO>();
+	public ArrayList<HeDaoTao> ReadData() {
+		ArrayList<HeDaoTao> list = new ArrayList<HeDaoTao>();
 		try {
 			Connection conn = JDBConnect.getConnection();
 			java.sql.Statement statement = conn.createStatement();
@@ -22,7 +21,7 @@ public class HeDaoTaoDAO {
 				String mahdt = rs.getString("MAHDT");
 				String tenhdt = rs.getString("TENHDT");
 			
-				list.add(new HeDaoTaoDTO(mahdt, tenhdt));
+				list.add(new HeDaoTao(mahdt, tenhdt));
 			}
 
 			JDBConnect.closeConnection(conn);
@@ -35,7 +34,7 @@ public class HeDaoTaoDAO {
 
 	public Boolean WriteData() {
 		if (ClearData(HeDaoTaoBUS.getDsHDT())) {
-			for (HeDaoTaoDTO temp : HeDaoTaoBUS.getDsHDT()) {
+			for (HeDaoTao temp : HeDaoTaoBUS.getDsHDT()) {
 				addHDT(temp);
 			}
 			return true;
@@ -43,7 +42,7 @@ public class HeDaoTaoDAO {
 		return false;
 	}
 
-	public boolean addHDT(HeDaoTaoDTO obj) {
+	public boolean addHDT(HeDaoTao obj) {
 		String sql = "INSERT INTO HEDAOTAO(MAHDT, TENHDT) VALUES(?,?)";
 
 		try (Connection conn = JDBConnect.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -58,7 +57,7 @@ public class HeDaoTaoDAO {
 		return false;
 	}
 
-	public boolean DeleteData(HeDaoTaoDTO obj) {
+	public boolean DeleteData(HeDaoTao obj) {
 		String sql = "DELETE FROM HEDAOTAO WHERE MAHDT = '" + obj.getMaHDT() + "'";
 
 		try (Connection conn = JDBConnect.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -71,7 +70,7 @@ public class HeDaoTaoDAO {
 		return false;
 	}
 
-	public Boolean ClearData(ArrayList<HeDaoTaoDTO> obj) {
+	public Boolean ClearData(ArrayList<HeDaoTao> obj) {
 		String sql = "DELETE FROM HEDAOTAO";
 
 		try (Connection conn = JDBConnect.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -84,7 +83,7 @@ public class HeDaoTaoDAO {
 		return false;
 	}
 
-	public Boolean UpdateData(HeDaoTaoDTO newobj, String mahdt) {
+	public Boolean UpdateData(HeDaoTao newobj, String mahdt) {
 		String sql = "UPDATE HEDAOTAO SET MAHDT='" + newobj.getMaHDT() + "', TENHDT='" + newobj.getTenHDT() + "'" + " WHERE MAHDT='" + mahdt + "'";
 
 		try (Connection conn = JDBConnect.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {

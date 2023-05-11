@@ -7,8 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import BUS.ChuyenNganhBUS;
-import DAO.ChuyenNganhDTO;
-import DAO.KhoaDTO;
+import DTO.ChuyenNganhDTO;
 import main.JDBConnect;
 
 public class ChuyenNganhDAO {
@@ -50,8 +49,8 @@ public class ChuyenNganhDAO {
 		try (Connection conn = JDBConnect.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 
 			stmt.setString(1, obj.getMaCN());
-			stmt.setString(2, obj.getTenCN());
-			stmt.setString(3, new KhoaDTO().getMaKhoa()); // Lấy giá trị MaKhoa từ đối tượng KhoaDTO
+			stmt.setString(2, obj.getTenCn());
+			stmt.setString(3, obj.getMaKhoa()); // Lấy giá trị MaKhoa từ đối tượng KhoaDTO
 			stmt.executeUpdate();
 			return true;
 		} catch (SQLException e) {
@@ -87,7 +86,7 @@ public class ChuyenNganhDAO {
 	}
 
 	public Boolean UpdateData(ChuyenNganhDTO newobj, String macn) {
-		String sql = "UPDATE CHUYENNGANH SET MACN='" + newobj.getMaCN() + "', TENCN='" + newobj.getTenCN() + "', MAKHOA="
+		String sql = "UPDATE CHUYENNGANH SET MACN='" + newobj.getMaCN() + "', TENCN='" + newobj.getTenCn() + "', MAKHOA="
 				+ newobj.getMaKhoa() + "'" + " WHERE MACN='" + macn + "'";
 
 		try (Connection conn = JDBConnect.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {

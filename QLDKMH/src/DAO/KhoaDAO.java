@@ -7,12 +7,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import BUS.KhoaBUS;
-import DAO.KhoaDTO;
+import DTO.Khoa;
 import main.JDBConnect;
 
 public class KhoaDAO {
-	public ArrayList<KhoaDTO> ReadData() {
-		ArrayList<KhoaDTO> list = new ArrayList<KhoaDTO>();
+	public ArrayList<Khoa> ReadData() {
+		ArrayList<Khoa> list = new ArrayList<Khoa>();
 		try {
 			Connection conn = JDBConnect.getConnection();
 			java.sql.Statement statement = conn.createStatement();
@@ -22,7 +22,7 @@ public class KhoaDAO {
 				String makhoa = rs.getString("MAKHOA");
 				String tenkhoa = rs.getString("TENKHOA");
 				int namtl = rs.getInt("NAMTL");
-				list.add(new KhoaDTO(makhoa, tenkhoa, namtl));
+				list.add(new Khoa(makhoa, tenkhoa, namtl));
 			}
 
 			JDBConnect.closeConnection(conn);
@@ -35,7 +35,7 @@ public class KhoaDAO {
 
 	public Boolean WriteData() {
 		if (ClearData(KhoaBUS.getDsKhoa())) {
-			for (KhoaDTO temp : KhoaBUS.getDsKhoa()) {
+			for (Khoa temp : KhoaBUS.getDsKhoa()) {
 				addKhoa(temp);
 			}
 			return true;
@@ -43,7 +43,7 @@ public class KhoaDAO {
 		return false;
 	}
 
-	public boolean addKhoa(KhoaDTO obj) {
+	public boolean addKhoa(Khoa obj) {
 		String sql = "INSERT INTO KHOA(MAKHOA, TENKHOA, NAMTL) VALUES(?,?,?)";
 
 		try (Connection conn = JDBConnect.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -59,7 +59,7 @@ public class KhoaDAO {
 		return false;
 	}
 
-	public boolean DeleteData(KhoaDTO obj) {
+	public boolean DeleteData(Khoa obj) {
 		String sql = "DELETE FROM KHOA WHERE MAKHOA = '" + obj.getMaKhoa() + "'";
 
 		try (Connection conn = JDBConnect.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -72,7 +72,7 @@ public class KhoaDAO {
 		return false;
 	}
 
-	public Boolean ClearData(ArrayList<KhoaDTO> obj) {
+	public Boolean ClearData(ArrayList<Khoa> obj) {
 		String sql = "DELETE FROM KHOA";
 
 		try (Connection conn = JDBConnect.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -85,8 +85,9 @@ public class KhoaDAO {
 		return false;
 	}
 
-	public Boolean UpdateData(KhoaDTO newobj, String makhoa) {
-		String sql = "UPDATE KHOA SET MAKHOA='" + newobj.getMaKhoa() + "', TENKHOA='" + newobj.getTenKhoa() + "'" + " WHERE MAKHOA='" + makhoa + "'";
+	public Boolean UpdateData(Khoa newobj, String makhoa) {
+		String sql = "UPDATE KHOA SET MAKHOA='" + newobj.getMaKhoa() + "', TENKHOA='" + newobj.getTenKhoa() + "'NamTL="
+				+ newobj.getNamTL() + " WHERE MAKHOA='" + makhoa + "'";
 
 		try (Connection conn = JDBConnect.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 
