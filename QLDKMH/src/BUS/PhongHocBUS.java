@@ -31,12 +31,15 @@ public class PhongHocBUS {
     }
 
     public void sua(PhongHoc old_obj, PhongHoc new_obj) {
-        dsPH.set(dsPH.indexOf(old_obj), new_obj);
+        if(dsPH.indexOf(old_obj) != -1)
+            dsPH.set(dsPH.indexOf(old_obj), new_obj);
     }
 
     public void xoa(PhongHoc obj) {
-        dsPH.remove(dsPH.indexOf(obj));
-        slPH--;
+        if(dsPH.indexOf(old_obj)!= -1){
+            dsPH.remove(dsPH.indexOf(obj));
+            slPH--;
+        }
     }
 
     public ArrayList<PhongHoc> tim(String str) {
