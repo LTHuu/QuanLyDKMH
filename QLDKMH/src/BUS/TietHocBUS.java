@@ -43,4 +43,15 @@ public class TietHocBUS {
 		}
 		return false;
 	}
+	
+	public ArrayList<TietHoc> timMaMH(String mahp) {
+		ArrayList<TietHoc> temp = new ArrayList<TietHoc>();
+		for(TietHoc t : dsth) {
+			if(t.getMaHP().equals(mahp)) {
+				temp.add(t);
+			}
+		}
+		return temp;
+	}
+	
 }

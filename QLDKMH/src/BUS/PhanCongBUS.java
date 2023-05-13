@@ -22,7 +22,7 @@ public class PhanCongBUS {
 
 	public boolean checkDuplicate(PhanCongDTO obj) {
 		for (PhanCongDTO temp : dsPC) {
-			if (temp.getMaDuocPC().equals(obj.getMaDuocPC())) {
+			if (temp.getMaPC().equals(obj.getMaPC())) {
 				return false;
 			}
 		}
@@ -45,7 +45,7 @@ public class PhanCongBUS {
 		ArrayList<PhanCongDTO> temp = new ArrayList<PhanCongDTO>();
 		for (PhanCongDTO t : dsPC) {
 			boolean ok = false;
-			if (t.getMaDuocPC().indexOf(str) != -1) {
+			if (t.getMaPC().indexOf(str) != -1) {
 				ok = true;
 			}
 			if (!ok && t.getLoaiPC().indexOf(str) != -1) {

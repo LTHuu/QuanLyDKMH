@@ -43,4 +43,23 @@ public class HocPhanBUS {
 		}
 		return false;
 	}
+
+	public ArrayList<HocPhan> timMaMH(String str) {
+		ArrayList<HocPhan> temp = new ArrayList<HocPhan>();
+		for (HocPhan t : dshp) {
+			if (t.getMaMH().indexOf(str) != -1) {
+				temp.add(t);
+			}
+		}
+		return temp;
+	}
+
+	public HocPhan timMaHP(String mahp) {
+		for (HocPhan temp : dshp) {
+			if (temp.getMaHP().equals(mahp)) {
+				return temp;
+			}
+		}
+		return null;
+	}
 }

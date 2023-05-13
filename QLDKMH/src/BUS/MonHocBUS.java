@@ -45,4 +45,12 @@ public class MonHocBUS {
 		}
 		return false;
 	}
+	
+	public MonHoc timMaMH(String mamh) {
+		for(MonHoc temp : dsmh) {
+			if(temp.getMaMH().equals(mamh))
+				return temp;
+		}
+		return null;
+	}
 }

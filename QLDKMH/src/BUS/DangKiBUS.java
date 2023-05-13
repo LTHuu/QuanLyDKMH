@@ -3,6 +3,7 @@ package BUS;
 import java.util.ArrayList;
 
 import DTO.DangKiDTO;
+import DTO.HocPhan;
 
 public class DangKiBUS {
 	static ArrayList<DangKiDTO> dsdk = new ArrayList<DangKiDTO>();
@@ -40,5 +41,16 @@ public class DangKiBUS {
 			return true;
 		}
 		return false;
+	}
+
+	public ArrayList<HocPhan> timMaSV(String masv) {
+		ArrayList<HocPhan> ds = new ArrayList<HocPhan>();
+		HocPhanBUS hpb = new HocPhanBUS();
+		for(DangKiDTO temp : dsdk) {
+			if(temp.getMaSV().equals(masv)) {
+				ds.add(hpb.timMaHP(temp.getMaHP()));
+			}
+		}
+		return ds;
 	}
 }
