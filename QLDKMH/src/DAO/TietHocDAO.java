@@ -26,12 +26,12 @@ public class TietHocDAO {
 				TietHoc th = new TietHoc();
 				th.setMaTH(rs.getString("MaTH"));
 				th.setLoaiTH(rs.getString("LoaiTietHoc"));
-				th.setSiSo(rs.getInt("siso"));
 				th.setGioBD(rs.getString("GioBD"));
 				th.setNgay(rs.getString("NgHoc"));
 				th.setLop(rs.getString("Lop"));
 				th.setPhong(rs.getString("Phong"));
 				th.setSoTiet(rs.getInt("SoTiet"));
+				th.setMaHP(rs.getString("MAHP"));
 				tietHocs.add(th);
 			}
 		}
@@ -39,7 +39,7 @@ public class TietHocDAO {
 	}
 
 	public void addTietHoc(TietHoc th) throws SQLException {
-		String sql = "INSERT INTO TietHoc(MaTH, GioBD,NgHoc,SoTiet, LoaiTietHoc,Lop,Phong,SiSo) VALUES (?, ?, ?, ?, ?,?,?,?)";
+		String sql = "INSERT INTO TietHoc(MaTH, GioBD,NgHoc,SoTiet, LoaiTietHoc,Lop,Phong,MAHP) VALUES (?, ?, ?, ?, ?,?,?,?)";
 		try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			pstmt.setString(1, th.getMaTH());
 			pstmt.setString(2, th.getGioBD());
@@ -48,13 +48,13 @@ public class TietHocDAO {
 			pstmt.setString(5, th.getLoaiTH());
 			pstmt.setString(6, th.getLop());
 			pstmt.setString(7, th.getPhong());
-			pstmt.setInt(8, th.getSiSo());
+			pstmt.setString(8, th.getMaHP());
 			pstmt.executeUpdate();
 		}
 	}
 
 	public void updateTietHoc(TietHoc th) throws SQLException {
-		String sql = "UPDATE tiet_hoc SET GioBD = ?, NgBD = ?, NgHoc = ?, SoTiet = ?,LoaiTietHoc = ?,Lop = ?, Phong = ?,SiSo = ? WHERE MaTH = ?";
+		String sql = "UPDATE tiet_hoc SET GioBD = ?, NgBD = ?, NgHoc = ?, SoTiet = ?,LoaiTietHoc = ?,Lop = ?, Phong = ?,MAHP = ? WHERE MaTH = ?";
 		try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			pstmt.setString(1, th.getGioBD());
 			pstmt.setString(2, th.getNgay());
@@ -62,7 +62,7 @@ public class TietHocDAO {
 			pstmt.setString(4, th.getLoaiTH());
 			pstmt.setString(5, th.getLop());
 			pstmt.setString(6, th.getPhong());
-			pstmt.setInt(7, th.getSiSo());
+			pstmt.setString(7, th.getMaHP());
 			pstmt.setString(8, th.getMaTH());
 			pstmt.executeUpdate();
 		}

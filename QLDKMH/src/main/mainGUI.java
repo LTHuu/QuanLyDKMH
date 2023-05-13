@@ -5,6 +5,8 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import GUI.DangNhapGUI;
+
 public class mainGUI {
 
 	private JFrame frame;
@@ -51,6 +53,7 @@ public class mainGUI {
 		jpWork = new JPanel();
 		jpWork.setBounds(291, 0, 1249, 763);
 		frame.getContentPane().add(jpWork);
+		setJpWork(new DangNhapGUI());
 	}
 	
 	public void setJpWork(JPanel obj) {

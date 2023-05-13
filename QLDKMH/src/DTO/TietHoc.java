@@ -11,12 +11,12 @@ package DTO;
 public class TietHoc {
 	String MaTH;
 	String LoaiTH;
-	int SiSo;
 	String GioBD;
 	String Ngay;
 	int SoTiet;
 	String Lop;
 	String Phong;
+	String MaHP;
 
 	public TietHoc() {
 	}
@@ -24,25 +24,25 @@ public class TietHoc {
 	public TietHoc(TietHoc obj) {
 		MaTH = obj.MaTH;
 		LoaiTH = obj.LoaiTH;
-		SiSo = obj.SiSo;
 		GioBD = obj.GioBD;
 		Ngay = obj.Ngay;
 		SoTiet = obj.SoTiet;
 		Lop = obj.Lop;
 		Phong = obj.Phong;
+		MaHP = obj.MaHP;
 	}
 
-	public TietHoc(String maTH, String loaiTH, int siSo, String gioBD, String ngay, int soTiet, String lop, String phong,
-			String lTH) {
+	public TietHoc(String maTH, String loaiTH, String gioBD, String ngay, int soTiet, String lop, String phong,
+			String lTH,String maHP) {
 		super();
 		MaTH = maTH;
 		LoaiTH = loaiTH;
-		SiSo = siSo;
 		GioBD = gioBD;
 		Ngay = ngay;
 		SoTiet = soTiet;
 		Lop = lop;
 		Phong = phong;
+		MaHP = maHP;
 	}
 
 	public String getMaTH() {
@@ -51,10 +51,6 @@ public class TietHoc {
 
 	public String getLoaiTH() {
 		return LoaiTH;
-	}
-
-	public int getSiSo() {
-		return SiSo;
 	}
 
 	public String getGioBD() {
@@ -71,10 +67,6 @@ public class TietHoc {
 
 	public void setLoaiTH(String loaiTH) {
 		LoaiTH = loaiTH;
-	}
-
-	public void setSiSo(int siso) {
-		SiSo = siso;
 	}
 
 	public void setGioBD(String gioBD) {
@@ -107,6 +99,14 @@ public class TietHoc {
 
 	public void setPhong(String phong) {
 		Phong = phong;
+	}
+
+	public String getMaHP() {
+		return MaHP;
+	}
+
+	public void setMaHP(String maHP) {
+		MaHP = maHP;
 	}
 
 }

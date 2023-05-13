@@ -31,6 +31,9 @@ public class HocPhanDAO {
 			hp.setNgKT(rs.getString("NgKT"));
 			hp.setMaHK(rs.getString("HocKy"));
 			hp.setMaMH(rs.getString("MonHoc"));
+			hp.setSiSo(rs.getInt("SISO"));
+			hp.setSiSoToiDa(rs.getInt("SISOTOIDA"));
+			hp.setMaGV(rs.getString("MaGV"));
 			list.add(hp);
 		}
 
@@ -45,7 +48,7 @@ public class HocPhanDAO {
 		boolean result = false;
 
 		try {
-			String sql = "INSERT INTO hocphan (MaHP, TenHP, NgBD, NgKT, MonHoc , HocKy) VALUES (?, ?, ?, ?, ?, ?)";
+			String sql = "INSERT INTO hocphan (MaHP, TenHP, NgBD, NgKT, MonHoc , HocKy, SISO,SISOTOIDA,MAGV) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, hocPhan.getMaHP());
 			ps.setString(2, hocPhan.getTenHP());
@@ -53,6 +56,9 @@ public class HocPhanDAO {
 			ps.setString(4, hocPhan.getNgKT());
 			ps.setString(5, hocPhan.getMaMH());
 			ps.setString(6, hocPhan.getMaHK());
+			ps.setInt(7, hocPhan.getSiSo());
+			ps.setInt(8, hocPhan.getSiSoToiDa());
+			ps.setString(9, hocPhan.getMaGV());
 
 			int rowsAffected = ps.executeUpdate();
 			if (rowsAffected > 0) {
@@ -114,14 +120,17 @@ public class HocPhanDAO {
 	}
 	
 	public boolean capNhatHocPhan(HocPhan hp) throws SQLException {
-		String sql = "UPDATE HocPhan SET TenHP = ?, NgBD = ? , NgKT = ?, MonHoc = ?, HocKy = ? WHERE MaHP = ?";
+		String sql = "UPDATE HocPhan SET TenHP = ?, NgBD = ? , NgKT = ?, MonHoc = ?, HocKy = ?,SISO = ?,SISOTOIDA = ?,MAGV = ? WHERE MaHP = ?";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setString(1, hp.getTenHP());
 		pstmt.setString(2, hp.getNgBD());
 		pstmt.setString(3, hp.getNgKT());
 		pstmt.setString(4, hp.getMaMH());
 		pstmt.setString(5, hp.getMaHK());
-		pstmt.setString(6, hp.getMaHP());
+		pstmt.setInt(6, hp.getSiSo());
+		pstmt.setInt(7, hp.getSiSoToiDa());
+		pstmt.setString(8, hp.getMaGV());
+		pstmt.setString(9, hp.getMaHP());
 		int rowsAffected = pstmt.executeUpdate();
 		pstmt.close();
 

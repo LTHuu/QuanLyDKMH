@@ -40,8 +40,9 @@ public class PhanCongDTO {
 		LoaiPC = loaiPC;
 	}
 
-	public void setMaDuocPC(String maPC) {
+	public void setMaPC(String maPC) {
 		MaPC = maPC;
 	}
+
 
 }

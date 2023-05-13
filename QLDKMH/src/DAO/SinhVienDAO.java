@@ -26,7 +26,7 @@ public class SinhVienDAO {
 				String diachi = rs.getString("DIACHI");
 
 				// Do something with the retrieved data
-				list.add(new SinhVienDTO(tensv, masv, sdt, khoa, diachi));
+				list.add(new SinhVienDTO(masv, tensv, sdt, khoa, diachi));
 			}
 
 			JDBConnect.closeConnection(conn);
