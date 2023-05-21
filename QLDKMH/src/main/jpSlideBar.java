@@ -9,6 +9,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import BUS.GiangVienBUS;
@@ -21,10 +22,13 @@ import GUI.HocPhanGUI;
 import GUI.HocPhiGUI;
 import GUI.KetQuaKTGUI;
 import GUI.MonHocGUI;
+import GUI.PhanCongGUI;
+import GUI.QuanLyDiemGUI;
 import GUI.QuanLyNguoiDungGUI;
 import GUI.TKBGUI;
 import GUI.TKGVGUI;
 import GUI.TKSVGUI;
+import GUI.XemPCGUI;
 
 public class jpSlideBar extends JPanel implements Runnable {
 
@@ -39,7 +43,7 @@ public class jpSlideBar extends JPanel implements Runnable {
 	private String ImgObj[];
 
 	static mainGUI mGUI;
-	
+
 	static String ten = "";
 
 	@Override
@@ -176,30 +180,29 @@ public class jpSlideBar extends JPanel implements Runnable {
 	}
 
 	public void SlideBarBegin(Graphics g) {
-		ChoiceObj = new String[] { "Thời khóa biểu", "Học phí" };
-		ImgObj = new String[] { "D:/javaAPP/QLDKMH/src/img/calendar.png", "D:/javaAPP/QLDKMH/src/img/bill.png" };
+		ChoiceObj = new String[] { "Thời khóa biểu", "Điểm" };
+		ImgObj = new String[] { "D:/javaAPP/QLDKMH/src/img/calendar.png", "D:/javaAPP/QLDKMH/src/img/grade.png" };
 //		choice = 4;
 		DrawSlideBar(g);
 	}
 
 	public void SlideBarSV(Graphics g) {
-		ChoiceObj = new String[] { "Quản lý thông tin", "Thời khóa biểu", "Học phí", "Đăng ký môn học", "Điểm" };
+		ChoiceObj = new String[] { "Quản lý thông tin", "Thời khóa biểu", "Đăng ký môn học", "Điểm" };
 		ImgObj = new String[] { "D:/javaAPP/QLDKMH/src/img/info.png", "D:/javaAPP/QLDKMH/src/img/calendar.png",
-				"D:/javaAPP/QLDKMH/src/img/bill.png", "D:/javaAPP/QLDKMH/src/img/approval.png",
-				"D:/javaAPP/QLDKMH/src/img/grade.png" };
+				"D:/javaAPP/QLDKMH/src/img/approval.png", "D:/javaAPP/QLDKMH/src/img/grade.png" };
 		DrawSlideBar(g);
 	}
 
 	public void SlideBarGV(Graphics g) {
-		ChoiceObj = new String[] { "Quản lý thông tin", "Lịch dạy", "Xem phân công" };
-		ImgObj = new String[] { "D:/javaAPP/QLDKMH/src/img/info.png", "D:/javaAPP/QLDKMH/src/img/calendar.png",
-				"D:/javaAPP/QLDKMH/src/img/approval.png" };
+		ChoiceObj = new String[] { "Quản lý thông tin", "Xem phân công" };
+		ImgObj = new String[] { "D:/javaAPP/QLDKMH/src/img/info.png", "D:/javaAPP/QLDKMH/src/img/approval.png" };
 		DrawSlideBar(g);
 	}
 
 	public void SlideBarAD(Graphics g) {
-		ChoiceObj = new String[] { "Quản lý SV/GV", "Quản lý môn học", "Quản lý học phần", "Quản lý phân công" };
-		ImgObj = new String[] { "", "", "", "" };
+		ChoiceObj = new String[] { "Quản lý SV/GV", "Quản lý môn học", "Quản lý học phần", "Quản lý phân công",
+				"Quản lý điểm" };
+		ImgObj = new String[] { "", "", "", "", "D:/javaAPP/QLDKMH/src/img/grade.png" };
 		DrawSlideBar(g);
 	}
 
@@ -253,32 +256,38 @@ public class jpSlideBar extends JPanel implements Runnable {
 	public static void changeJpWork() {
 		System.out.println(choice);
 		if (choice == 9) {
-			System.out.println("run");
-			mGUI.setJpWork(new DangNhapGUI());
+			if (Role.isBlank()) {
+				mGUI.setJpWork(new DangNhapGUI());
+			} else {
+				if (JOptionPane.showConfirmDialog(null, "Bạn có đồng ý đăng xuất!") == 0) {
+					Role = "";
+					changeJpWork();
+					return;
+				}
+			}
 		} else {
 			switch (Role) {
 			case "SV": {
 				switch (choice) {
 				case 0: {
-					mGUI.setJpWork(new TKSVGUI());
+					TKSVGUI temp = new TKSVGUI();
+					temp.setMaSV(MaTK);
+					mGUI.setJpWork(temp);
 					break;
 				}
 				case 1: {
-					mGUI.setJpWork(new TKBGUI());
+					TKBGUI temp = new TKBGUI();
+					temp.setTxtFind(MaTK);
+					mGUI.setJpWork(temp);
 					break;
 
 				}
 				case 2: {
-					mGUI.setJpWork(new HocPhiGUI());
-					break;
-
-				}
-				case 3: {
 					mGUI.setJpWork(new DangKyMHGUI());
 					break;
 
 				}
-				case 4: {
+				case 3: {
 					mGUI.setJpWork(new KetQuaKTGUI());
 					break;
 
@@ -289,17 +298,13 @@ public class jpSlideBar extends JPanel implements Runnable {
 			case "GV": {
 				switch (choice) {
 				case 0: {
-					System.out.println("2");
-					mGUI.setJpWork(new TKGVGUI());
+					TKGVGUI gv = new TKGVGUI();
+					gv.setMaGV(MaTK);
+					mGUI.setJpWork(gv);
 					break;
 				}
 				case 1: {
-
-					break;
-
-				}
-				case 2: {
-
+					mGUI.setJpWork(new XemPCGUI(MaTK));
 					break;
 
 				}
@@ -322,7 +327,11 @@ public class jpSlideBar extends JPanel implements Runnable {
 					break;
 				}
 				case 3: {
-//					mGUI.setJpWork(new ph());
+					mGUI.setJpWork(new PhanCongGUI());
+					break;
+				}
+				case 4: {
+					mGUI.setJpWork(new QuanLyDiemGUI());
 					break;
 				}
 				}
@@ -331,15 +340,12 @@ public class jpSlideBar extends JPanel implements Runnable {
 			case "": {
 				switch (choice) {
 				case 0: {
-					System.out.println("1");
 					mGUI.setJpWork(new TKBGUI());
 					break;
 				}
-				case 1: {
-					mGUI.setJpWork(new HocPhiGUI());
+				case 1:
+					mGUI.setJpWork(new KetQuaKTGUI());
 					break;
-
-				}
 				}
 				break;
 			}
@@ -368,13 +374,12 @@ public class jpSlideBar extends JPanel implements Runnable {
 			ten = temp.getTenSV();
 			break;
 		}
-		case "GV":{
+		case "GV": {
 			GiangVienBUS gvb = new GiangVienBUS();
 			GiangVien temp = gvb.timMaGV(MaTK);
 			ten = temp.getTenGV();
+			break;
 		}
-		default:
-			throw new IllegalArgumentException("Unexpected value: " + Role);
 		}
 	}
 
