@@ -9,51 +9,67 @@ package DTO;
  * @author MeoMeo
  */
 public class MonHoc {
-    String MaMH;
-    String TenMH;
-    int SoTC;
+	String MaMH;
+	String TenMH;
+	int SoTC;
+	String MonHocTrc;
 
+	public MonHoc() {
+		MaMH = null;
+		TenMH = null;
+		SoTC = 0;
+		MonHocTrc = null;
+	}
 
-public MonHoc(){
-    MaMH = null;
-    TenMH = null;
-    SoTC = 0;
-}
+	public MonHoc(MonHoc obj) {
+		this.MaMH = obj.MaMH;
+		this.TenMH = obj.TenMH;
+		this.SoTC = obj.SoTC;
+		this.MonHocTrc = obj.MonHocTrc;
+	}
 
-public MonHoc(MonHoc obj){
-    this.MaMH = obj.MaMH;
-    this.TenMH= obj.TenMH;
-    this.SoTC = obj.SoTC;
-}
-public MonHoc(String maMH,String tenMH, int soTC){
-    super();
-    MaMH  = maMH;
-    TenMH = tenMH;
-    SoTC  = soTC;
-}
+	public MonHoc(String maMH, String tenMH, int soTC, String mht) {
+		super();
+		MaMH = maMH;
+		TenMH = tenMH;
+		SoTC = soTC;
+		MonHocTrc = mht;
+	}
 
-public String getMaMH (){
-    return MaMH;
-}
+	public Object[] toArray() {
+		return new Object[] { MaMH, TenMH, SoTC, MonHocTrc };
+	}
 
-public String getTenMH (){
-    return TenMH;
-}
+	public String getMaMH() {
+		return MaMH;
+	}
 
-public int getSoTC(){
-    return SoTC;
-}
+	public String getTenMH() {
+		return TenMH;
+	}
 
-public void setMaMH(String maMH){
-    MaMH = maMH;
-}
+	public int getSoTC() {
+		return SoTC;
+	}
 
-public void setTenMH(String tenMH){
-    TenMH = tenMH;
-}
+	public void setMaMH(String maMH) {
+		MaMH = maMH;
+	}
 
-public void setSoTC(int soTC){
-    SoTC = soTC;
-}
+	public void setTenMH(String tenMH) {
+		TenMH = tenMH;
+	}
+
+	public void setSoTC(int soTC) {
+		SoTC = soTC;
+	}
+
+	public String getMonHocTrc() {
+		return MonHocTrc;
+	}
+
+	public void setMonHocTrc(String monHocTrc) {
+		MonHocTrc = monHocTrc;
+	}
 
 }

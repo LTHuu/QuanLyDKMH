@@ -5,9 +5,6 @@ public class KetQuaKT {
 	float Diem;
 	String MaSV;
 
-	public KetQuaKT() {
-	}
-
 	public KetQuaKT(String MaKT, float diem, String maSV) {
 		this.MaKT = MaKT;
 		Diem = diem;
@@ -18,6 +15,10 @@ public class KetQuaKT {
 		MaKT = obj.MaKT;
 		Diem = obj.Diem;
 		MaSV = obj.MaSV;
+	}
+
+	public Object[] toArray() {
+		return new Object[] { MaKT, MaSV, Diem };
 	}
 
 	public String getMaKT() {

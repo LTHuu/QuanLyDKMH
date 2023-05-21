@@ -24,6 +24,10 @@ public class SinhVienDTO {
 
 	}
 
+	public Object[] toArray() {
+		return new Object[] { MaSV, TenSV, SoDT, Khoa, DiaChi };
+	}
+
 	public String getMaSV() {
 		return MaSV;
 	}

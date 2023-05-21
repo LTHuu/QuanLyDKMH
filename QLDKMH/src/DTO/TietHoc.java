@@ -33,7 +33,7 @@ public class TietHoc {
 	}
 
 	public TietHoc(String maTH, String loaiTH, String gioBD, String ngay, int soTiet, String lop, String phong,
-			String lTH,String maHP) {
+			String maHP) {
 		super();
 		MaTH = maTH;
 		LoaiTH = loaiTH;
@@ -43,6 +43,10 @@ public class TietHoc {
 		Lop = lop;
 		Phong = phong;
 		MaHP = maHP;
+	}
+
+	public Object[] toArray() {
+		return new Object[] { MaTH, LoaiTH, GioBD, SoTiet, Phong };
 	}
 
 	public String getMaTH() {

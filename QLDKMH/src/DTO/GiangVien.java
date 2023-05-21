@@ -29,7 +29,7 @@ public class GiangVien {
 		Khoa = khoa;
 		Chuyen = chuyen;
 	}
-	
+
 	public GiangVien(GiangVien obj) {
 		MaGV = obj.MaGV;
 		TenGV = obj.TenGV;
@@ -37,6 +37,14 @@ public class GiangVien {
 		SDT = obj.SDT;
 		Khoa = obj.Khoa;
 		Chuyen = obj.Chuyen;
+	}
+
+	public Object[] toArray() {
+		return new Object[] { MaGV, TenGV };
+	}
+
+	public Object[] toArrayInfo() {
+		return new Object[] { MaGV, TenGV, Email, SDT, Khoa, Chuyen };
 	}
 
 	public String getMaGV() {

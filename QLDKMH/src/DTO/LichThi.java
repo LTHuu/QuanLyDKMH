@@ -39,6 +39,10 @@ public class LichThi {
 		MaHP = maHP;
 		LoaiKT = loaiKT;
 	}
+	
+	public Object[] toArray() {
+		return new Object[] {MaKT,NgayKT,TGBatDau,MaHP,LoaiKT};
+	}
 
 	public String getMaKT() {
 		return MaKT;

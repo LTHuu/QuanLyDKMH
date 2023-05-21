@@ -54,7 +54,12 @@ public class HocPhan {
 	
 	public Object[] toArrayDaDK() {
 		MonHocBUS mhb = new MonHocBUS();
+		System.out.println("toArray " +MaMH);
 		return new Object[] {MaMH,TenHP,MaHP,mhb.timMaMH(MaMH).getSoTC()};
+	}
+	
+	public Object[] toArray() {
+		return new Object[] {MaHP,TenHP,MaMH,NgBD,NgKT,MaGV,SiSo,SiSoToiDa};
 	}
 
 	public String getMaMH() {

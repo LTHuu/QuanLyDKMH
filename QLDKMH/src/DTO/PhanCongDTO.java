@@ -1,5 +1,9 @@
 package DTO;
 
+import BUS.GiangVienBUS;
+import BUS.HocPhanBUS;
+import BUS.MonHocBUS;
+
 public class PhanCongDTO {
 	String MaGV;
 	String LoaiPC;
@@ -18,6 +22,21 @@ public class PhanCongDTO {
 		MaGV = obj.MaGV;
 		LoaiPC = obj.LoaiPC;
 		MaPC = obj.MaPC;
+	}
+
+	public Object[] toArray() {
+		GiangVienBUS gvb = new GiangVienBUS();
+		return new Object[] { MaGV, gvb.timMaGV(MaGV).getTenGV(), LoaiPC, MaPC };
+	}
+
+	public Object[] toArray1() {
+		HocPhanBUS hpb = new HocPhanBUS();
+		HocPhan hp = hpb.timMaHP(MaPC);
+		if (hp == null)
+			return null;
+		MonHocBUS mhb = new MonHocBUS();
+		MonHoc mh = mhb.timMaMH(hp.getMaMH());
+		return new Object[] { LoaiPC, MaPC, hp.getMaMH(), mh.getTenMH() };
 	}
 
 	public String getMaGV() {
@@ -43,6 +62,5 @@ public class PhanCongDTO {
 	public void setMaPC(String maPC) {
 		MaPC = maPC;
 	}
-
 
 }

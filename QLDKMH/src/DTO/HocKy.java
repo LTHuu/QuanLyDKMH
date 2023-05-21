@@ -28,6 +28,10 @@ public HocKy(String maHK, String tenHK, String ngayBD, String ngayKT, int nam){
     Nam = nam;
 }
 
+public Object[] toArray() {
+	return new Object[] {MaHK,TenHK,NgayBD,NgayKT};
+}
+
 public String getMaHK(){
     return MaHK;
 }
