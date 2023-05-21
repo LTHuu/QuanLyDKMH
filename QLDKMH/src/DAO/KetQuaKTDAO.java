@@ -46,7 +46,7 @@ public class KetQuaKTDAO {
 	}
 
 	public boolean Them(KetQuaKT obj) {
-		String sql = "INSERT INTO KetQuaKT(masv, makt, diem,heso) VALUES(?,?,?)";
+		String sql = "INSERT INTO KetQua(masv, makt, diem) VALUES(?,?,?)";
 
 		try (Connection conn = JDBConnect.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 
@@ -63,7 +63,7 @@ public class KetQuaKTDAO {
 	}
 
 	public boolean DeleteData(KetQuaKT obj) {
-		String sql = "DELETE FROM KetQuaKT WHERE MASV = '" + obj.getMaSV() + "' and MAKT='" + obj.getMaKT() + "'";
+		String sql = "DELETE FROM KetQua WHERE MASV = '" + obj.getMaSV() + "' and MAKT='" + obj.getMaKT() + "'";
 
 		try (Connection conn = JDBConnect.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 
@@ -76,7 +76,7 @@ public class KetQuaKTDAO {
 	}
 
 	public Boolean ClearData(ArrayList<KetQuaKT> obj) {
-		String sql = "DELETE FROM KetQuaKT";
+		String sql = "DELETE FROM KetQua";
 
 		try (Connection conn = JDBConnect.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 
@@ -89,8 +89,8 @@ public class KetQuaKTDAO {
 	}
 
 	public Boolean UpdateData(KetQuaKT newobj, String masv, String makt) {
-		String sql = "UPDATE KetQuaKT SET MaSV='" + newobj.getMaSV() + "', MAKT='" + newobj.getMaKT() + "', diem="
-				+ newobj.getDiem() + " WHERE MaSV='" + masv + "' AND MAKT='" + makt + ",";
+		String sql = "UPDATE KetQua SET MaSV='" + newobj.getMaSV() + "', MAKT='" + newobj.getMaKT() + "', diem="
+				+ newobj.getDiem() + " WHERE MaSV='" + masv + "' AND MAKT='" + makt + "'";
 
 		try (Connection conn = JDBConnect.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 

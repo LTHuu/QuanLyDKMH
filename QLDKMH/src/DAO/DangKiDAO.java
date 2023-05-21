@@ -9,83 +9,81 @@ import java.util.ArrayList;
 import java.util.List;
 
 import DTO.DangKiDTO;
+import DTO.GiangVien;
+import main.JDBConnect;
 
 public class DangKiDAO {
 
-	private Connection conn;
-
-	public DangKiDAO(Connection conn) {
-		this.conn = conn;
+	public DangKiDAO() {
 	}
 
 	// Hàm đọc toàn bộ dữ liệu
-	public List<DangKiDTO> getAllDangKi() throws SQLException {
-		List<DangKiDTO> list = new ArrayList<>();
-		String sql = "SELECT * FROM DangKi";
-		PreparedStatement pstmt = conn.prepareStatement(sql);
-		ResultSet rs = pstmt.executeQuery();
+	public ArrayList<DangKiDTO> getAllDangKi() {
+		ArrayList<DangKiDTO> list = new ArrayList<DangKiDTO>();
+		try {
+			Connection conn = JDBConnect.getConnection();
+			java.sql.Statement statement = conn.createStatement();
+			ResultSet rs = statement.executeQuery("SELECT * FROM DangKy");
 
-		while (rs.next()) {
-			String maSV = rs.getString("MaSV");
-			String ngDK = rs.getString("NgDK");
-			String maHP = rs.getString("MaHP");
+			while (rs.next()) {
+				String mahp = rs.getString("MAHP");
+				String masv = rs.getString("MASV");
+				String ngdk = rs.getString("NGAYDK");
 
-			DangKiDTO dangKi = new DangKiDTO(maSV, ngDK, maHP);
-			list.add(dangKi);
+				list.add(new DangKiDTO(masv, ngdk, mahp));
+			}
+
+			JDBConnect.closeConnection(conn);
+			return list;
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
-
-		rs.close();
-		pstmt.close();
-
-		return list;
+		return null;
 	}
 
 	// Hàm thêm 1 dòng dữ liệu
-	public boolean themDangKi(DangKiDTO dangKi) throws SQLException {
-		String sql = "INSERT INTO DangKi (MaSV, NgDK, MaHP) VALUES (?, ?, ?)";
-		PreparedStatement pstmt = conn.prepareStatement(sql);
-		pstmt.setString(1, dangKi.getMaSV());
-		pstmt.setString(2, dangKi.getNgDK());
-		pstmt.setString(3, dangKi.getMaHP());
-		int rowsAffected = pstmt.executeUpdate();
-		pstmt.close();
+	public boolean themDangKi(DangKiDTO obj) {
+		String sql = "INSERT INTO DangKy(masv,ngaydk,mahp) VALUES(?,?,?)";
 
-		return rowsAffected > 0;
+		try (Connection conn = JDBConnect.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+			stmt.setString(1, obj.getMaSV());
+			stmt.setString(2, obj.getNgDK());
+			stmt.setString(3, obj.getMaHP());
+
+			stmt.executeUpdate();
+			return true;
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		return false;
 	}
 
 	// Hàm xóa toàn bộ dữ liệu
-	public boolean xoaTatCaDangKi() throws SQLException {
-		String sql = "DELETE FROM DangKi";
-		PreparedStatement pstmt = conn.prepareStatement(sql);
-		int rowsAffected = pstmt.executeUpdate();
-		pstmt.close();
+	public boolean xoaTatCaDangKi() {
+		String sql = "DELETE FROM DangKy";
 
-		return rowsAffected > 0;
+		try (Connection conn = JDBConnect.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+			stmt.executeUpdate();
+			return true;
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		return false;
 	}
 
 	// Hàm xóa 1 dòng dữ liệu
-	public boolean xoaDangKi(DangKiDTO dangKi) throws SQLException {
-		String sql = "DELETE FROM DangKi WHERE MaSV = ? AND NgDK = ? AND MaHP = ?";
-		PreparedStatement pstmt = conn.prepareStatement(sql);
-		pstmt.setString(1, dangKi.getMaSV());
-		pstmt.setString(2, dangKi.getNgDK());
-		pstmt.setString(3, dangKi.getMaHP());
-		int rowsAffected = pstmt.executeUpdate();
-		pstmt.close();
+	public boolean xoaDangKi(DangKiDTO obj) {
+		String sql = "DELETE FROM DangKy WHERE MAHP = '" + obj.getMaHP() + "' AND MASV = '" + obj.getMaSV() + "'";
 
-		return rowsAffected > 0;
-	}
+		try (Connection conn = JDBConnect.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-	// Hàm cập nhật dòng dữ liệu
-	public boolean capNhatDangKi(DangKiDTO dangKi) throws SQLException {
-		String sql = "UPDATE DangKi SET NgDK = ? WHERE MaSV = ? AND MaHP = ?";
-		PreparedStatement pstmt = conn.prepareStatement(sql);
-		pstmt.setString(1, dangKi.getNgDK());
-		pstmt.setString(2, dangKi.getMaSV());
-		pstmt.setString(3, dangKi.getMaHP());
-		int rowsAffected = pstmt.executeUpdate();
-		pstmt.close();
-
-		return rowsAffected > 0;
+			stmt.executeUpdate();
+			return true;
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		return false;
 	}
 }

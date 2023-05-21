@@ -1,18 +1,22 @@
 package BUS;
+
 import java.util.ArrayList;
 
+import DAO.ChuyenNganhDAO;
 import DTO.ChuyenNganhDTO;
 
 public class ChuyenNganhBUS {
 	static ArrayList<ChuyenNganhDTO> dsCN = new ArrayList<ChuyenNganhDTO>();
-	static int slCN = 0;
-	public ChuyenNganhBUS() {
+	ChuyenNganhDAO dao = new ChuyenNganhDAO();
 
+	public ChuyenNganhBUS() {
+		dsCN = dao.ReadData();
 	}
+
 	public boolean them(ChuyenNganhDTO obj) {
 		if (checkDuplicate(obj)) {
 			dsCN.add(obj);
-			slCN++;
+			dao.addCN(obj);
 			return true;
 		}
 		return false;
@@ -28,15 +32,26 @@ public class ChuyenNganhBUS {
 	}
 
 	public void sua(ChuyenNganhDTO old_obj, ChuyenNganhDTO new_obj) {
-		if(dsCN.indexOf(old_obj)!=-1)
+		if (dsCN.indexOf(old_obj) != -1) {
 			dsCN.set(dsCN.indexOf(old_obj), new_obj);
+			dao.UpdateData(new_obj, old_obj.getMaCN());
+		}
 	}
 
 	public void xoa(ChuyenNganhDTO obj) {
-		if(dsCN.indexOf(obj)!=-1) {
+		if (dsCN.indexOf(obj) != -1) {
 			dsCN.remove(dsCN.indexOf(obj));
-			slCN--;
+			dao.DeleteData(obj);
 		}
+	}
+	
+	public ChuyenNganhDTO timMaCN(String macn) {
+		for(ChuyenNganhDTO temp : dsCN) {
+			if(temp.getMaCN().equals(macn)) {
+				return temp;
+			}
+		}
+		return null;
 	}
 
 	public ArrayList<ChuyenNganhDTO> findCN(String str) {
@@ -59,15 +74,7 @@ public class ChuyenNganhBUS {
 		return dsCN;
 	}
 
-	public static int getSlCN() {
-		return slCN;
-	}
-
 	public static void setDsCN(ArrayList<ChuyenNganhDTO> dsCN) {
 		ChuyenNganhBUS.dsCN = dsCN;
-	}
-
-	public static void setSlCN(int slCN) {
-		ChuyenNganhBUS.slCN = slCN;
 	}
 }

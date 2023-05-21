@@ -2,11 +2,12 @@ package BUS;
 
 import java.util.ArrayList;
 
+import DAO.HocPhiDAO;
 import DTO.HocPhi;
 
 public class HocPhiBUS {
 	static ArrayList<HocPhi> dsHPhi = new ArrayList<HocPhi>();
-	static int slHPhi = 0;
+	HocPhiDAO dao = new HocPhiDAO();
 
 	public HocPhiBUS() {
 
@@ -15,7 +16,7 @@ public class HocPhiBUS {
 	public boolean them(HocPhi obj) {
 		if (CheckTrung(obj)) {
 			dsHPhi.add(obj);
-			slHPhi++;
+			dao.Them(obj);
 			return true;
 		}
 		return false;
@@ -30,12 +31,18 @@ public class HocPhiBUS {
 	}
 
 	public void sua(HocPhi old_obj, HocPhi new_obj) {
-		dsHPhi.set(dsHPhi.indexOf(old_obj), new_obj);
+		if (dsHPhi.indexOf(old_obj) != -1) {
+			dsHPhi.set(dsHPhi.indexOf(old_obj), new_obj);
+			dao.UpdateData(new_obj, old_obj.getMaHocPhi());
+		}
 	}
 
 	public void xoa(HocPhi obj) {
-		dsHPhi.remove(dsHPhi.indexOf(obj));
-		slHPhi--;
+		if (dsHPhi.indexOf(obj) != -1) {
+			dsHPhi.remove(dsHPhi.indexOf(obj));
+			dao.DeleteData(obj);
+		}
+
 	}
 
 	/**
@@ -67,8 +74,8 @@ public class HocPhiBUS {
 			if ((!ok || findType == 1) && (Tien1 <= t.getSoTien() && t.getSoTien() >= Tien2)) {
 				ok = true;
 			}
-			
-			if(ok) {
+
+			if (ok) {
 				temp.add(t);
 			}
 		}
@@ -106,15 +113,7 @@ public class HocPhiBUS {
 		return dsHPhi;
 	}
 
-	public static int getSlHPhi() {
-		return slHPhi;
-	}
-
 	public static void setDsHPhi(ArrayList<HocPhi> dsHPhi) {
 		HocPhiBUS.dsHPhi = dsHPhi;
-	}
-
-	public static void setSlHPhi(int slHPhi) {
-		HocPhiBUS.slHPhi = slHPhi;
 	}
 }

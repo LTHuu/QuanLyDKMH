@@ -2,20 +2,21 @@ package BUS;
 
 import java.util.ArrayList;
 
+import DAO.KhoaDAO;
 import DTO.Khoa;
 
 public class KhoaBUS {
 	static ArrayList<Khoa> dsKhoa = new ArrayList<Khoa>();
-	static int slKhoa = 0;
+	KhoaDAO dao = new KhoaDAO();
 
 	public KhoaBUS() {
-
+		dsKhoa = dao.ReadData();
 	}
 
 	public boolean them(Khoa obj) {
 		if (checkDuplicate(obj)) {
 			dsKhoa.add(obj);
-			slKhoa++;
+			dao.addKhoa(obj);
 			return true;
 		}
 		return false;
@@ -31,15 +32,26 @@ public class KhoaBUS {
 	}
 
 	public void sua(Khoa old_obj, Khoa new_obj) {
-		if (dsKhoa.indexOf(old_obj) != -1)
+		if (dsKhoa.indexOf(old_obj) != -1) {
 			dsKhoa.set(dsKhoa.indexOf(old_obj), new_obj);
+			dao.UpdateData(new_obj, old_obj.getMaKhoa());
+		}
 	}
 
 	public void xoa(Khoa obj) {
 		if (dsKhoa.indexOf(obj) != -1) {
 			dsKhoa.remove(dsKhoa.indexOf(obj));
-			slKhoa--;
+			dao.DeleteData(obj);
 		}
+	}
+	
+	public Khoa timMaKhoa(String makhoa) {
+		for(Khoa temp : dsKhoa) {
+			if(temp.getMaKhoa().equals(makhoa)) {
+				return temp;
+			}
+		}
+		return null;
 	}
 
 	public ArrayList<Khoa> findKhoa(String str) {
@@ -65,15 +77,7 @@ public class KhoaBUS {
 		return dsKhoa;
 	}
 
-	public static int getSlKhoa() {
-		return slKhoa;
-	}
-
 	public static void setDsKhoa(ArrayList<Khoa> dsKhoa) {
 		KhoaBUS.dsKhoa = dsKhoa;
-	}
-
-	public static void setSlKhoa(int slKhoa) {
-		KhoaBUS.slKhoa = slKhoa;
 	}
 }

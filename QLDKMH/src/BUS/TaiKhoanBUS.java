@@ -47,11 +47,19 @@ public class TaiKhoanBUS {
 		}
 	}
 
+	public void sua(String matk, TaiKhoan new_obj) {
+		TaiKhoan tk = timMaTK(matk);
+		if (tk != null) {
+			dsTK.set(dsTK.indexOf(tk), new_obj);
+			dao.UpdateData(new_obj, matk);
+		}
+	}
+
 	public boolean DangNhap(String tenDN, String pass) {
 		for (TaiKhoan temp : dsTK) {
 			if (temp.getTenDN().equals(tenDN)) {
 				if (temp.getMatKhau().equals(pass)) {
-					System.out.println("thành công!");
+//					System.out.println("thành công!");
 					SinhVienBUS sv = new SinhVienBUS();
 					GiangVienBUS gv = new GiangVienBUS();
 					jpSlideBar.setMaTK(temp.getMaTK());
@@ -72,6 +80,14 @@ public class TaiKhoanBUS {
 			}
 		}
 		return false;
+	}
+
+	public TaiKhoan timMaTK(String matk) {
+		for (TaiKhoan temp : dsTK) {
+			if (temp.getMaTK().equals(matk))
+				return temp;
+		}
+		return null;
 	}
 
 	public static ArrayList<TaiKhoan> getDsTK() {

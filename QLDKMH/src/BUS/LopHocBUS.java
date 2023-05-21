@@ -2,20 +2,21 @@ package BUS;
 
 import java.util.ArrayList;
 
+import DAO.LopHocDAO;
 import DTO.Lop;
 
 public class LopHocBUS {
 	static ArrayList<Lop> dsLH = new ArrayList<Lop>();
-	static int slLH = 0;
+	LopHocDAO dao = new LopHocDAO();
 
 	public LopHocBUS() {
-
+		dsLH = dao.ReadData();
 	}
 
 	public boolean them(Lop obj) {
 		if (checkTrung(obj)) {
 			dsLH.add(obj);
-			slLH++;
+			dao.Them(obj);
 		}
 		return false;
 	}
@@ -30,12 +31,17 @@ public class LopHocBUS {
 	}
 
 	public void sua(Lop old_obj, Lop new_obj) {
-		dsLH.set(dsLH.indexOf(old_obj), new_obj);
+		if (dsLH.indexOf(old_obj) != -1) {
+			dao.UpdateData(new_obj, old_obj.getMaLop());
+			dsLH.set(dsLH.indexOf(old_obj), new_obj);
+		}
 	}
 
 	public void xoa(Lop obj) {
-		dsLH.remove(dsLH.indexOf(obj));
-		slLH--;
+		if (dsLH.indexOf(obj) != -1) {
+			dsLH.remove(dsLH.indexOf(obj));
+			dao.DeleteData(obj);
+		}
 	}
 
 	public ArrayList<Lop> tim(String str) {
@@ -59,15 +65,7 @@ public class LopHocBUS {
 		return dsLH;
 	}
 
-	public static int getSlLH() {
-		return slLH;
-	}
-
 	public static void setDsLH(ArrayList<Lop> dsLH) {
 		LopHocBUS.dsLH = dsLH;
-	}
-
-	public static void setSlLH(int slLH) {
-		LopHocBUS.slLH = slLH;
 	}
 }

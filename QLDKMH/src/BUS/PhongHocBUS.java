@@ -2,20 +2,21 @@ package BUS;
 
 import java.util.ArrayList;
 
+import DAO.PhongHocDAO;
 import DTO.PhongHoc;
 
 public class PhongHocBUS {
 	static ArrayList<PhongHoc> dsPH = new ArrayList<PhongHoc>();
-	static int slPH = 0;
+	PhongHocDAO dao = new PhongHocDAO();
 
 	public PhongHocBUS() {
-
+		dsPH = dao.ReadData();
 	}
 
 	public boolean them(PhongHoc obj) {
 		if (checkTrung(obj)) {
 			dsPH.add(obj);
-			slPH++;
+			dao.Them(obj);
 			return true;
 		}
 		return false;
@@ -31,14 +32,16 @@ public class PhongHocBUS {
 	}
 
 	public void sua(PhongHoc old_obj, PhongHoc new_obj) {
-		if (dsPH.indexOf(old_obj) != -1)
+		if (dsPH.indexOf(old_obj) != -1) {
 			dsPH.set(dsPH.indexOf(old_obj), new_obj);
+			dao.UpdateData(new_obj, old_obj.getMaPH());
+		}
 	}
 
 	public void xoa(PhongHoc obj) {
 		if (dsPH.indexOf(obj) != -1) {
 			dsPH.remove(dsPH.indexOf(obj));
-			slPH--;
+			dao.DeleteData(obj);
 		}
 	}
 
@@ -63,15 +66,7 @@ public class PhongHocBUS {
 		return dsPH;
 	}
 
-	public static int getSlPH() {
-		return slPH;
-	}
-
 	public static void setDsPH(ArrayList<PhongHoc> dsPH) {
 		PhongHocBUS.dsPH = dsPH;
-	}
-
-	public static void setSlPH(int slPH) {
-		PhongHocBUS.slPH = slPH;
 	}
 }

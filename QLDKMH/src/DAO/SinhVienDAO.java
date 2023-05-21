@@ -96,7 +96,8 @@ public class SinhVienDAO {
 
 	public Boolean UpdateData(SinhVienDTO newobj, String masv) {
 		String sql = "UPDATE SinhVien SET MASV = '" + newobj.getMaSV() + "', TENSV = '" + newobj.getTenSV()
-				+ "', SODT = '" + newobj.getSoDT() + "',Khoa='" + newobj.getKhoa() + "' WHERE DIACHI = '" + masv + "'";
+				+ "', SODT = '" + newobj.getSoDT() + "',Khoa='" + newobj.getKhoa() + "',DiaChi= '" + newobj.getDiaChi()
+				+ "' WHERE MASV = '" + masv + "'";
 
 		try (Connection conn = JDBConnect.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 

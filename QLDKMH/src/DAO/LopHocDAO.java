@@ -92,10 +92,10 @@ public class LopHocDAO {
 		return false;
 	}
 
-	public Boolean UpdateData(Lop newobj, String makt) {
+	public Boolean UpdateData(Lop newobj, String malop) {
 		String sql = "UPDATE Lop SET MaLOP='" + newobj.getMaLop() + "', TenLop='" + newobj.getTenLop() + "', NamHoc="
 				+ newobj.getNamHoc() + "',HeDaoTao='" + newobj.getHeDaoTao() + "',Khoa='" + newobj.getKhoa()
-				+ "' WHERE MaKT='" + makt + "'";
+				+ "' WHERE MaLOP='" + malop + "'";
 
 		try (Connection conn = JDBConnect.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 

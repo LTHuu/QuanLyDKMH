@@ -91,8 +91,8 @@ public class TaiKhoanDAO {
 
 	public Boolean UpdateData(TaiKhoan newobj, String matk) {
 		String sql = "UPDATE TaiKhoan SET MATK = '" + newobj.getMaTK() + "', TENDN = '" + newobj.getTenDN()
-				+ ", NGAYLAP ='" + newobj.getNgLap() + "',EMAIL = '" + newobj.getEmail() + "',MATKHAU = '"
-				+ newobj.getMatKhau() + "'";
+				+ "', NGLAP ='" + newobj.getNgLap() + "',EMAIL = '" + newobj.getEmail() + "',MATKHAU = '"
+				+ newobj.getMatKhau() + "' WHERE MATK='" + matk + "'";
 
 		try (Connection conn = JDBConnect.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 

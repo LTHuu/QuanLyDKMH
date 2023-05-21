@@ -2,20 +2,21 @@ package BUS;
 
 import java.util.ArrayList;
 
+import DAO.HocKiDAO;
 import DTO.HocKy;
 
 public class HocKyBUS {
 	static ArrayList<HocKy> dsHK = new ArrayList<HocKy>();
-	static int slHK = 0;
+	HocKiDAO dao = new HocKiDAO();
 
 	public HocKyBUS() {
-
+		dsHK = dao.ReadData();
 	}
 
 	public boolean them(HocKy obj) {
 		if (checkTrung(obj)) {
 			dsHK.add(obj);
-			slHK++;
+			dao.Them(obj);
 			return true;
 		} else
 			return false;
@@ -31,12 +32,15 @@ public class HocKyBUS {
 	}
 
 	public void sua(HocKy old_obj, HocKy new_obj) {
-		dsHK.set(dsHK.indexOf(old_obj), new_obj);
+		if (dsHK.indexOf(old_obj) != -1) {
+			dsHK.set(dsHK.indexOf(old_obj), new_obj);
+			dao.UpdateData(new_obj, old_obj.getMaHK());
+		}
 	}
 
 	public void xoa(HocKy obj) {
 		dsHK.remove(dsHK.indexOf(obj));
-		slHK--;
+		dao.DeleteData(obj);
 	}
 
 	public ArrayList<HocKy> tim(String str) {
@@ -73,15 +77,7 @@ public class HocKyBUS {
 		return dsHK;
 	}
 
-	public static int getSlHK() {
-		return slHK;
-	}
-
 	public static void setDsHK(ArrayList<HocKy> dsHK) {
 		HocKyBUS.dsHK = dsHK;
-	}
-
-	public static void setSlHK(int slHK) {
-		HocKyBUS.slHK = slHK;
 	}
 }

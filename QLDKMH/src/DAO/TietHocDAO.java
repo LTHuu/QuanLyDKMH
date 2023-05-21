@@ -8,20 +8,20 @@ import java.util.ArrayList;
 import java.sql.*;
 import java.util.List;
 
+import DTO.GiangVien;
 import DTO.HocPhan;
 import DTO.TietHoc;
+import main.JDBConnect;
 
 public class TietHocDAO {
-	private Connection conn;
 
-	public TietHocDAO(Connection conn) {
-		this.conn = conn;
-	}
+	public ArrayList<TietHoc> ReadData() {
+		ArrayList<TietHoc> list = new ArrayList<TietHoc>();
+		try {
+			Connection conn = JDBConnect.getConnection();
+			java.sql.Statement statement = conn.createStatement();
+			ResultSet rs = statement.executeQuery("SELECT * FROM TietHoc");
 
-	public List<TietHoc> getAllTietHoc() throws SQLException {
-		List<TietHoc> tietHocs = new ArrayList<>();
-		String sql = "SELECT * FROM TietHoc";
-		try (Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
 			while (rs.next()) {
 				TietHoc th = new TietHoc();
 				th.setMaTH(rs.getString("MaTH"));
@@ -32,30 +32,42 @@ public class TietHocDAO {
 				th.setPhong(rs.getString("Phong"));
 				th.setSoTiet(rs.getInt("SoTiet"));
 				th.setMaHP(rs.getString("MAHP"));
-				tietHocs.add(th);
+				list.add(th);
 			}
+
+			JDBConnect.closeConnection(conn);
+			return list;
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
-		return tietHocs;
+		return null;
 	}
 
-	public void addTietHoc(TietHoc th) throws SQLException {
+	public boolean Them(TietHoc th) {
 		String sql = "INSERT INTO TietHoc(MaTH, GioBD,NgHoc,SoTiet, LoaiTietHoc,Lop,Phong,MAHP) VALUES (?, ?, ?, ?, ?,?,?,?)";
-		try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-			pstmt.setString(1, th.getMaTH());
-			pstmt.setString(2, th.getGioBD());
-			pstmt.setString(3, th.getNgay());
-			pstmt.setInt(4, th.getSoTiet());
-			pstmt.setString(5, th.getLoaiTH());
-			pstmt.setString(6, th.getLop());
-			pstmt.setString(7, th.getPhong());
-			pstmt.setString(8, th.getMaHP());
-			pstmt.executeUpdate();
+
+		try (Connection conn = JDBConnect.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+			stmt.setString(1, th.getMaTH());
+			stmt.setString(2, th.getGioBD());
+			stmt.setString(3, th.getNgay());
+			stmt.setInt(4, th.getSoTiet());
+			stmt.setString(5, th.getLoaiTH());
+			stmt.setString(6, th.getLop());
+			stmt.setString(7, th.getPhong());
+			stmt.setString(8, th.getMaHP());
+
+			stmt.executeUpdate();
+			return true;
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
 		}
+		return false;
 	}
 
-	public void updateTietHoc(TietHoc th) throws SQLException {
+	public void updateTietHoc(TietHoc th) {
 		String sql = "UPDATE tiet_hoc SET GioBD = ?, NgBD = ?, NgHoc = ?, SoTiet = ?,LoaiTietHoc = ?,Lop = ?, Phong = ?,MAHP = ? WHERE MaTH = ?";
-		try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+		try (Connection conn = JDBConnect.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			pstmt.setString(1, th.getGioBD());
 			pstmt.setString(2, th.getNgay());
 			pstmt.setInt(3, th.getSoTiet());
@@ -65,21 +77,27 @@ public class TietHocDAO {
 			pstmt.setString(7, th.getMaHP());
 			pstmt.setString(8, th.getMaTH());
 			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
 		}
 	}
 
-	public void deleteTietHoc(TietHoc th) throws SQLException {
+	public void deleteTietHoc(TietHoc th) {
 		String sql = "DELETE FROM TietHoc WHERE MaTH = ?";
-		try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-			pstmt.setString(1, th.getMaTH());
-			pstmt.executeUpdate();
+		try (Connection conn = JDBConnect.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+			stmt.setString(1, th.getMaTH());
+			stmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
 		}
 	}
 
-	public void deleteAllTietHoc() throws SQLException {
+	public void deleteAllTietHoc() {
 		String sql = "DELETE FROM TietHoc";
-		try (Statement stmt = conn.createStatement()) {
+		try (Connection conn = JDBConnect.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 			stmt.executeUpdate(sql);
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
 		}
 	}
 }

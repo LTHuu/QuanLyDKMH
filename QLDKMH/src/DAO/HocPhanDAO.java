@@ -8,133 +8,114 @@ import java.util.ArrayList;
 import java.util.List;
 
 import DTO.DangKiDTO;
+import DTO.GiangVien;
 import DTO.HocPhan;
+import main.JDBConnect;
 
 public class HocPhanDAO {
-	private Connection conn;
 
-	public HocPhanDAO(Connection conn) {
-		this.conn = conn;
+	public HocPhanDAO() {
 	}
 
-	public List<HocPhan> getAllHocPhan() throws SQLException {
-		String sql = "SELECT * FROM HocPhan";
-		PreparedStatement pstmt = conn.prepareStatement(sql);
-		ResultSet rs = pstmt.executeQuery();
-
-		List<HocPhan> list = new ArrayList<>();
-		while (rs.next()) {
-			HocPhan hp = new HocPhan();
-			hp.setMaHP(rs.getString("MaHP"));
-			hp.setTenHP(rs.getString("TenHP"));
-			hp.setNgBD(rs.getString("NgBD"));
-			hp.setNgKT(rs.getString("NgKT"));
-			hp.setMaHK(rs.getString("HocKy"));
-			hp.setMaMH(rs.getString("MonHoc"));
-			hp.setSiSo(rs.getInt("SISO"));
-			hp.setSiSoToiDa(rs.getInt("SISOTOIDA"));
-			hp.setMaGV(rs.getString("MaGV"));
-			list.add(hp);
-		}
-
-		rs.close();
-		pstmt.close();
-
-		return list;
-	}
-
-	public boolean themHocPhan(HocPhan hocPhan) {
-		PreparedStatement ps = null;
-		boolean result = false;
-
+	public ArrayList<HocPhan> ReadData() {
+		ArrayList<HocPhan> list = new ArrayList<HocPhan>();
 		try {
-			String sql = "INSERT INTO hocphan (MaHP, TenHP, NgBD, NgKT, MonHoc , HocKy, SISO,SISOTOIDA,MAGV) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-			ps = conn.prepareStatement(sql);
-			ps.setString(1, hocPhan.getMaHP());
-			ps.setString(2, hocPhan.getTenHP());
-			ps.setString(3, hocPhan.getNgBD());
-			ps.setString(4, hocPhan.getNgKT());
-			ps.setString(5, hocPhan.getMaMH());
-			ps.setString(6, hocPhan.getMaHK());
-			ps.setInt(7, hocPhan.getSiSo());
-			ps.setInt(8, hocPhan.getSiSoToiDa());
-			ps.setString(9, hocPhan.getMaGV());
+			Connection conn = JDBConnect.getConnection();
+			java.sql.Statement statement = conn.createStatement();
+			ResultSet rs = statement.executeQuery("SELECT * FROM HocPhan");
 
-			int rowsAffected = ps.executeUpdate();
-			if (rowsAffected > 0) {
-				result = true;
+			while (rs.next()) {
+				HocPhan hp = new HocPhan();
+				hp.setMaHP(rs.getString("MaHP"));
+				hp.setTenHP(rs.getString("TenHP"));
+				hp.setNgBD(rs.getString("NgBD"));
+				hp.setNgKT(rs.getString("NgKT"));
+				hp.setMaHK(rs.getString("HocKy"));
+				hp.setMaMH(rs.getString("MonHoc"));
+				hp.setSiSo(rs.getInt("SISO"));
+				hp.setSiSoToiDa(rs.getInt("SISOTOIDA"));
+				hp.setMaGV(rs.getString("MaGV"));
+				list.add(hp);
 			}
-		} catch (SQLException ex) {
-			System.err.println("Loi: " + ex.getMessage());
-		} finally {
+
+			JDBConnect.closeConnection(conn);
+			return list;
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
-
-		return result;
-	}
-
-	public boolean xoaHocPhan(String maHP) {
-		PreparedStatement ps = null;
-		boolean result = false;
-
-		try {
-			String sql = "DELETE FROM hocphan WHERE MaHP = ?";
-			ps = conn.prepareStatement(sql);
-			ps.setString(1, maHP);
-
-			int rowsAffected = ps.executeUpdate();
-			if (rowsAffected > 0) {
-				result = true;
-			}
-		} catch (SQLException ex) {
-			System.err.println("Loi: " + ex.getMessage());
-		} finally {
-		}
-
-		return result;
-	}
-
-	public boolean xoaTatCaHocPhan() {
-		PreparedStatement ps = null;
-		boolean result = false;
-
-		try {
-			String sql = "DELETE FROM hocphan";
-			ps = conn.prepareStatement(sql);
-			int rowsAffected = ps.executeUpdate();
-			if (rowsAffected > 0) {
-				result = true;
-			}
-		} catch (SQLException ex) {
-			System.err.println("Loi: " + ex.getMessage());
-		} finally {
-			try {
-				if (ps != null) {
-					ps.close();
-				}
-			} catch (SQLException ex) {
-				System.err.println("Loi: " + ex.getMessage());
-			}
-		}
-
-		return result;
+		return null;
 	}
 	
-	public boolean capNhatHocPhan(HocPhan hp) throws SQLException {
-		String sql = "UPDATE HocPhan SET TenHP = ?, NgBD = ? , NgKT = ?, MonHoc = ?, HocKy = ?,SISO = ?,SISOTOIDA = ?,MAGV = ? WHERE MaHP = ?";
-		PreparedStatement pstmt = conn.prepareStatement(sql);
-		pstmt.setString(1, hp.getTenHP());
-		pstmt.setString(2, hp.getNgBD());
-		pstmt.setString(3, hp.getNgKT());
-		pstmt.setString(4, hp.getMaMH());
-		pstmt.setString(5, hp.getMaHK());
-		pstmt.setInt(6, hp.getSiSo());
-		pstmt.setInt(7, hp.getSiSoToiDa());
-		pstmt.setString(8, hp.getMaGV());
-		pstmt.setString(9, hp.getMaHP());
-		int rowsAffected = pstmt.executeUpdate();
-		pstmt.close();
+	public boolean Them(HocPhan hocPhan) {
+		String sql = "INSERT INTO hocphan (MaHP, TenHP, NgBD, NgKT, MonHoc , HocKy, SISO,SISOTOIDA,MAGV) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-		return rowsAffected > 0;
+		try (Connection conn = JDBConnect.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+			stmt.setString(1, hocPhan.getMaHP());
+			stmt.setString(2, hocPhan.getTenHP());
+			stmt.setString(3, hocPhan.getNgBD());
+			stmt.setString(4, hocPhan.getNgKT());
+			stmt.setString(5, hocPhan.getMaMH());
+			stmt.setString(6, hocPhan.getMaHK());
+			stmt.setInt(7, hocPhan.getSiSo());
+			stmt.setInt(8, hocPhan.getSiSoToiDa());
+			stmt.setString(9, hocPhan.getMaGV());
+
+			stmt.executeUpdate();
+			return true;
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		return false;
+	}
+
+	public boolean DeleteData(HocPhan obj) {
+		String sql = "DELETE FROM HocPhan WHERE MAHP = '" + obj.getMaHP() + "'";
+
+		try (Connection conn = JDBConnect.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+			stmt.executeUpdate();
+			return true;
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		return false;
+	}
+
+	public Boolean ClearData() {
+		String sql = "DELETE FROM HocPhan";
+
+		try (Connection conn = JDBConnect.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+			stmt.executeUpdate();
+			return true;
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		return false;
+	}
+	
+	public Boolean UpdateData(HocPhan hp) {
+		String sql = "UPDATE HocPhan SET TenHP = ?, NgBD = ? , NgKT = ?, MonHoc = ?, HocKy = ?,SISO = ?,SISOTOIDA = ?,MAGV = ? WHERE MaHP = ?";
+
+		try (Connection conn = JDBConnect.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+			stmt.setString(1, hp.getTenHP());
+			stmt.setString(2, hp.getNgBD());
+			stmt.setString(3, hp.getNgKT());
+			stmt.setString(4, hp.getMaMH());
+			stmt.setString(5, hp.getMaHK());
+			stmt.setInt(6, hp.getSiSo());
+			stmt.setInt(7, hp.getSiSoToiDa());
+			stmt.setString(8, hp.getMaGV());
+			stmt.setString(9, hp.getMaHP());
+			
+			stmt.executeUpdate();
+			return true;
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		return false;
 	}
 
 }

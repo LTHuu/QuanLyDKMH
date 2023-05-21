@@ -22,7 +22,7 @@ public class PhanCongDAO {
 				String maduocpc = rs.getString("MAPC");
 				String loaipc = rs.getString("LOAIPC");
 				String magv = rs.getString("MAGV");
-				list.add(new PhanCongDTO(maduocpc, loaipc, magv));
+				list.add(new PhanCongDTO(magv, loaipc, maduocpc));
 			}
 
 			JDBConnect.closeConnection(conn);
@@ -85,9 +85,9 @@ public class PhanCongDAO {
 		return false;
 	}
 
-	public Boolean UpdateData(PhanCongDTO newobj, String mapc) {
+	public Boolean UpdateData(PhanCongDTO newobj, String mapc, String magv) {
 		String sql = "UPDATE PHANCONG SET MADUOCPC='" + newobj.getMaPC() + "', LOAIPC='" + newobj.getLoaiPC()
-				+ "', MAGV='" + newobj.getLoaiPC() + "'" + " WHERE MAPC='" + mapc + "'";
+				+ "', MAGV='" + newobj.getLoaiPC() + "'" + " WHERE MAPC='" + mapc + "' AND MAGV = '" + magv + ",";
 
 		try (Connection conn = JDBConnect.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 

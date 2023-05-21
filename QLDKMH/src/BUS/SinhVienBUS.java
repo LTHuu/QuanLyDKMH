@@ -37,6 +37,14 @@ public class SinhVienBUS {
 			dsSV.set(dsSV.indexOf(old_obj), new_obj);
 		}
 	}
+	
+	public void sua(String masv,SinhVienDTO new_obj) {
+		SinhVienDTO sv = timMaSV(masv);
+		if (sv!=null) {
+			dao.UpdateData(new_obj, masv);
+			dsSV.set(dsSV.indexOf(sv), new_obj);
+		}
+	}
 
 	public void xoa(SinhVienDTO obj) {
 		if (dsSV.indexOf(obj) != -1) {
@@ -44,11 +52,19 @@ public class SinhVienBUS {
 			dsSV.remove(dsSV.indexOf(obj));
 		}
 	}
+	
+	public void xoa(String masv) {
+		SinhVienDTO obj = timMaSV(masv);
+		if (dsSV.indexOf(obj) != -1) {
+			dao.DeleteData(obj);
+			dsSV.remove(dsSV.indexOf(obj));
+		}
+	}
 
 	public SinhVienDTO timMaSV(String masv) {
-		System.out.println("tim ma sv");
+//		System.out.println("tim ma sv");
 		for (SinhVienDTO temp : dsSV) {
-			System.out.println("Mã SV: " + temp.getMaSV());
+//			System.out.println("Mã SV: " + temp.getMaSV());
 			if (temp.getMaSV().equals(masv)) {
 				return temp;
 			}

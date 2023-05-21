@@ -2,21 +2,22 @@ package BUS;
 
 import java.util.ArrayList;
 
+import DAO.GiangVienDAO;
 import DTO.GiangVien;
 import DTO.SinhVienDTO;
 
 public class GiangVienBUS {
 	static ArrayList<GiangVien> dsGV = new ArrayList<GiangVien>();
-	static int slGV = 0;
+	GiangVienDAO dao = new GiangVienDAO();
 
 	public GiangVienBUS() {
-
+		dsGV = dao.ReadData();
 	}
 
 	public boolean them(GiangVien obj) {
 		if (checkTrung(obj)) {
 			dsGV.add(obj);
-			slGV++;
+			dao.Them(obj);
 			return true;
 		}
 		return false;
@@ -32,12 +33,33 @@ public class GiangVienBUS {
 	}
 
 	public void sua(GiangVien old_obj, GiangVien new_obj) {
-		dsGV.set(dsGV.indexOf(old_obj), new_obj);
+		if (dsGV.indexOf(old_obj) != -1) {
+			dsGV.set(dsGV.indexOf(old_obj), new_obj);
+			dao.UpdateData(new_obj, old_obj.getMaGV());
+		}
+	}
+
+	public void sua(String magv, GiangVien new_obj) {
+		GiangVien gv = timMaGV(magv);
+		if (gv != null) {
+			dsGV.set(dsGV.indexOf(gv), new_obj);
+			dao.UpdateData(new_obj, magv);
+		}
 	}
 
 	public void xoa(GiangVien obj) {
-		dsGV.remove(dsGV.indexOf(obj));
-		slGV--;
+		if (dsGV.indexOf(obj) != -1) {
+			dao.DeleteData(obj);
+			dsGV.remove(dsGV.indexOf(obj));
+		}
+	}
+	
+	public void xoa(String magv) {
+		GiangVien obj = timMaGV(magv);
+		if (dsGV.indexOf(obj) != -1) {
+			dao.DeleteData(obj);
+			dsGV.remove(dsGV.indexOf(obj));
+		}
 	}
 
 	public GiangVien timMaGV(String masv) {
@@ -70,15 +92,7 @@ public class GiangVienBUS {
 		return dsGV;
 	}
 
-	public static int getSlGV() {
-		return slGV;
-	}
-
 	public static void setDsGV(ArrayList<GiangVien> dsGV) {
 		GiangVienBUS.dsGV = dsGV;
-	}
-
-	public static void setSlGV(int slGV) {
-		GiangVienBUS.slGV = slGV;
 	}
 }

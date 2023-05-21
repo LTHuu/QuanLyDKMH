@@ -2,20 +2,21 @@ package BUS;
 
 import java.util.ArrayList;
 
+import DAO.PhanCongDAO;
 import DTO.PhanCongDTO;
 
 public class PhanCongBUS {
 	static ArrayList<PhanCongDTO> dsPC = new ArrayList<PhanCongDTO>();
-	static int slPC = 0;
+	PhanCongDAO dao = new PhanCongDAO();
 
 	public PhanCongBUS() {
-
+		dsPC = dao.ReadData();
 	}
 
 	public boolean them(PhanCongDTO obj) {
 		if (checkDuplicate(obj)) {
 			dsPC.add(obj);
-			slPC++;
+			dao.addPC(obj);
 		}
 		return false;
 	}
@@ -30,16 +31,28 @@ public class PhanCongBUS {
 	}
 
 	public void sua(PhanCongDTO old_obj, PhanCongDTO new_obj) {
-		if (dsPC.indexOf(old_obj) != -1)
+		if (dsPC.indexOf(old_obj) != -1) {
 			dsPC.set(dsPC.indexOf(old_obj), new_obj);
+			dao.UpdateData(new_obj, old_obj.getMaPC(),old_obj.getMaGV());
+		}
 	}
 
 	public void xoa(PhanCongDTO obj) {
 		if (dsPC.indexOf(obj) != -1) {
 			dsPC.remove(dsPC.indexOf(obj));
-			slPC--;
+			dao.DeleteData(obj);
 		}
 	}
+	
+	public ArrayList<PhanCongDTO> timMaGV(String magv) {
+		ArrayList<PhanCongDTO> temp = new ArrayList<PhanCongDTO>();
+		for (PhanCongDTO t : dsPC) {
+			if(t.getMaGV().equals(magv))
+				temp.add(t);
+		}
+		return temp;
+	}
+	
 
 	public ArrayList<PhanCongDTO> findPC(String str) {
 		ArrayList<PhanCongDTO> temp = new ArrayList<PhanCongDTO>();
@@ -61,15 +74,7 @@ public class PhanCongBUS {
 		return dsPC;
 	}
 
-	public static int getSlPC() {
-		return slPC;
-	}
-
 	public static void setDsPC(ArrayList<PhanCongDTO> dsPC) {
 		PhanCongBUS.dsPC = dsPC;
-	}
-
-	public static void setSlPC(int slPC) {
-		PhanCongBUS.slPC = slPC;
 	}
 }
